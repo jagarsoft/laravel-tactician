@@ -1,5 +1,8 @@
 vendor/
-composer.lock
 build/
 sami.phar
 cache/
+.idea/
+**/*.bak
+composer.lock
+.phpunit.result.cache
