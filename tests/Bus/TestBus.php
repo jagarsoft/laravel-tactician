@@ -4,6 +4,7 @@ namespace Joselfonseca\LaravelTactician\Tests\Bus;
 
 use Joselfonseca\LaravelTactician\Tests\TestCase;
 
+
 /**
  * Class TestBus
  * @package Joselfonseca\LaravelTactician\Tests\Bus
@@ -33,7 +34,7 @@ class TestBus extends TestCase{
     }
 
     /**
-     * Test if a a middleware can be applied to the stack
+     * Test if a middleware can be applied to the stack
      */
     public function test_it_applies_a_middleware()
     {
@@ -133,5 +134,24 @@ class TestBus extends TestCase{
             'DefaultPropertyOne' => 'John',
             'DefaultPropertyTwo' => 'Doe'
         ], $content);
+    }
+
+    public function test_it_applies_a_middleware_chain()
+    {
+        $bus = app('Joselfonseca\LaravelTactician\CommandBusInterface');
+        $bus->addHandler('Joselfonseca\LaravelTactician\Tests\Stubs\TestCommand',
+            'Joselfonseca\LaravelTactician\Tests\Stubs\TestCommandHandler');
+        $this->assertInstanceOf('Joselfonseca\LaravelTactician\Tests\Stubs\TestCommand',
+            $commandResponse = $bus->dispatch('Joselfonseca\LaravelTactician\Tests\Stubs\TestCommand', [], [
+                'Joselfonseca\LaravelTactician\Tests\Stubs\MiddlewareA',
+                'Joselfonseca\LaravelTactician\Tests\Stubs\MiddlewareB',
+                'Joselfonseca\LaravelTactician\Tests\Stubs\MiddlewareC',
+            ]));
+
+        $this->assertSame([
+            0 => 'HandledA',
+            1 => 'HandledB',
+            2 => 'HandledC'
+        ], $commandResponse->response);
     }
 }

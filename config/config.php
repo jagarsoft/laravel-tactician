@@ -25,6 +25,7 @@ return [
     */
 
     'inflector' => League\Tactician\Handler\MethodNameInflector\HandleInflector::class,
+    'inflector-undoable' => Joselfonseca\LaravelTactician\Handler\HandleInflectorUndoable::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -37,6 +38,7 @@ return [
     */
 
     'extractor' => League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor::class,
+    'extractor-undoable' => Joselfonseca\LaravelTactician\Handler\ClassNameExtractorUndoable::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -49,5 +51,6 @@ return [
     */
 
     'bus' => Joselfonseca\LaravelTactician\Bus::class,
+    'bus-undoable' => Joselfonseca\LaravelTactician\BusUndoable::class,
 
 ];

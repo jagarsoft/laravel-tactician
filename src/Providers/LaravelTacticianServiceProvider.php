@@ -24,9 +24,15 @@ class LaravelTacticianServiceProvider extends ServiceProvider
     {
         $this->registerConfig();
         $this->app->bind('Joselfonseca\LaravelTactician\Locator\LocatorInterface', config('laravel-tactician.locator'));
+
         $this->app->bind('League\Tactician\Handler\MethodNameInflector\MethodNameInflector', config('laravel-tactician.inflector'));
+        $this->app->bind('Joselfonseca\LaravelTactician\Handler\MethodNameInflectorUndoable', config('laravel-tactician.inflector-undoable'));
+
         $this->app->bind('League\Tactician\Handler\CommandNameExtractor\CommandNameExtractor', config('laravel-tactician.extractor'));
+        $this->app->bind('Joselfonseca\LaravelTactician\Handler\CommandNameExtractorUndoable', config('laravel-tactician.extractor-undoable'));
+
         $this->app->bind('Joselfonseca\LaravelTactician\CommandBusInterface', config('laravel-tactician.bus'));
+        $this->app->bind('Joselfonseca\LaravelTactician\CommandBusUndoableInterface', config('laravel-tactician.bus-undoable'));
 
         // Register Command Generator
         $this->app->singleton(

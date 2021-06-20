@@ -12,7 +12,8 @@ use League\Tactician\Handler\MethodNameInflector\MethodNameInflector;
 use League\Tactician\Handler\CommandNameExtractor\CommandNameExtractor;
 
 /**
- * The default Command bus Using Tactician, this is an implementation to dispatch commands to their handlers trough a middleware stack, every class is resolved from the laravel's service container.
+ * The default Command bus Using Tactician, this is an implementation to dispatch commands to their handlers
+ * trough a middleware stack, every class is resolved from the laravel's service container.
  *
  * @package Joselfonseca\LaravelTactician
  */
@@ -36,6 +37,7 @@ class Bus implements CommandBusInterface
      */
     protected $HandlerLocator;
 
+    private $inInputCommand;
 
     /**
      * @param MethodNameInflector  $MethodNameInflector
@@ -125,6 +127,7 @@ class Bus implements CommandBusInterface
         if (is_object($command)) {
             return $command;
         }
+        $this->inInputCommand = $command;
         $dependencies = [];
         $class = new ReflectionClass($command);
         foreach ($class->getConstructor()->getParameters() as $parameter) {
@@ -156,7 +159,7 @@ class Bus implements CommandBusInterface
     private function getDefaultValueOrFail($parameter)
     {
         if (! $parameter->isDefaultValueAvailable()) {
-            throw new InvalidArgumentException("Unable to map input to command: {$parameter->getName()}");
+            throw new InvalidArgumentException("Unable to map input to command {$this->inInputCommand} for parameter {$parameter->getName()}");
         }
 
         return $parameter->getDefaultValue();

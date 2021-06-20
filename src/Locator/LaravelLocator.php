@@ -59,7 +59,7 @@ class LaravelLocator implements LocatorInterface
      */
     public function getHandlerForCommand($commandName)
     {
-        if (!isset($this->handlers[$commandName])) {
+        if (!isset($this->handlers[$commandName]) || !is_callable($this->handlers[$commandName])) {
             throw MissingHandlerException::forCommand($commandName);
         }
 

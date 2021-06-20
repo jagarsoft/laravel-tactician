@@ -65,11 +65,11 @@ class TestLaravelLazyLocator extends TestCase
         $locator = app(LaravelLazyLocator::class);
         $locator->addHandlers([
             'Joselfonseca\LaravelTactician\Tests\Stubs\TestCommand' => 'Joselfonseca\LaravelTactician\Tests\Stubs\TestCommandHandler',
-            'Joselfonseca\LaravelTactician\Tests\Stubs\TestCommandInput' => 'Joselfonseca\LaravelTactician\Tests\Stubs\TestCommandSeccondHandler'
+            'Joselfonseca\LaravelTactician\Tests\Stubs\TestCommandInput' => 'Joselfonseca\LaravelTactician\Tests\Stubs\TestCommandSecondHandler'
         ]);
         $handler = $locator->getHandlerForCommand('Joselfonseca\LaravelTactician\Tests\Stubs\TestCommand');
         $handler2 = $locator->getHandlerForCommand('Joselfonseca\LaravelTactician\Tests\Stubs\TestCommandInput');
         $this->assertInstanceOf('Joselfonseca\LaravelTactician\Tests\Stubs\TestCommandHandler', $handler);
-        $this->assertInstanceOf('Joselfonseca\LaravelTactician\Tests\Stubs\TestCommandSeccondHandler', $handler2);
+        $this->assertInstanceOf('Joselfonseca\LaravelTactician\Tests\Stubs\TestCommandSecondHandler', $handler2);
     }
 }
